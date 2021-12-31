@@ -6,6 +6,10 @@ class BalanceService {
     private repo = balanceRepository,
   ) {}
 
+  async getBalance(discordID: number): Promise<number> {
+    return this.repo.getBalanceByDiscordID(discordID);
+  }
+
   async addBalanceToUser(discordID: number, amount: number): Promise<boolean> {
     const curBalance: number = await this.repo.getBalanceByDiscordID(discordID);
     return this.repo.putUser(new User(discordID, curBalance + amount));

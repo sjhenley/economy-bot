@@ -41,10 +41,10 @@ class BalanceRepository {
     try {
       const result = await this.client.get(params).promise();
       console.debug('Response from PUT action: \n', result);
-      return result.Item?.balance;
+      return result.Item ? result.Item.balance : 0;
     } catch (error) {
       console.error(error);
-      return 0;
+      throw new Error();
     }
   }
 }
