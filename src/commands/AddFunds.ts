@@ -21,26 +21,35 @@ const AddFunds: Command = {
     },
   ],
   run: async (client: Client, interaction: BaseCommandInteraction) => {
-    const targetUser = interaction.options.getUser('user');
-    const amount = interaction.options.get('amount')?.value;
+    const sourceUser = interaction.user;
 
-    if (targetUser === null || !targetUser || !amount) {
+    if (parseInt(sourceUser.id, 10) !== 192821137036541950) {
       await interaction.followUp({
         ephemeral: true,
-        content: 'Error finding user',
+        content: 'You are not admin!',
       });
     } else {
-      try {
-        await balanceService.addBalanceToUser(parseInt(targetUser.id, 10), amount as number);
+      const targetUser = interaction.options.getUser('user');
+      const amount = interaction.options.get('amount')?.value;
+
+      if (targetUser === null || !targetUser || !amount) {
         await interaction.followUp({
           ephemeral: true,
-          content: `Added ${amount} loungebucks to ${targetUser.username}`,
+          content: 'Error finding user',
         });
-      } catch (err) {
-        await interaction.followUp({
-          ephemeral: true,
-          content: 'could not add funds',
-        });
+      } else {
+        try {
+          await balanceService.addBalanceToUser(parseInt(targetUser.id, 10), amount as number);
+          await interaction.followUp({
+            ephemeral: true,
+            content: `Added ${amount} loungebucks to ${targetUser.username}`,
+          });
+        } catch (err) {
+          await interaction.followUp({
+            ephemeral: true,
+            content: 'could not add funds',
+          });
+        }
       }
     }
   },
