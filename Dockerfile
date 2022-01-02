@@ -3,6 +3,7 @@ FROM node:lts-slim
 RUN ["node", "--version"]
 
 COPY . .
+COPY "token" .
 RUN ls
 
 RUN ["mv", "token", ".env"]
