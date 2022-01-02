@@ -4,6 +4,7 @@ RUN ["node", "--version"]
 
 COPY . .
 RUN ["mv", "token", ".env"]
+RUN ls
 RUN cat .env
 
 RUN npm install
