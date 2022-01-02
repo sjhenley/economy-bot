@@ -25,7 +25,7 @@ const Balance: Command = {
 
     const balance = await balanceService.getBalance(parseInt(targetUser.id, 10));
 
-    await interaction.followUp({
+    await interaction.reply({
       ephemeral: true,
       content: `Balance for user ${targetUser.username} is ${balance} loungebucks`,
     });
