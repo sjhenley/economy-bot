@@ -47,11 +47,10 @@ class BalanceService {
         }
 
         const curTopUsers = role.members.map((u) => parseInt(u.user.id, 10));
+        console.log(`Current Top: ${curTopUsers}`);
+        console.log(`New top: ${topUsers}`);
 
         if (!topUsers.every((u) => curTopUsers.includes(u))) {
-          console.log(`Current Top: ${curTopUsers}`);
-          console.log(`New top: ${topUsers}`);
-
           // Get list of guild members
           memberMngr.list({ limit: 100 }).then((members) => {
           // Build a list of top members' usernames for later
@@ -80,7 +79,7 @@ class BalanceService {
                   }
                 });
 
-                // (channel as TextChannel).send(`@everyone Congrats to the new LoungeLad(s)! ${topUserString}`);
+                (channel as TextChannel).send(`Congrats to the new LoungeLad(s)! ${topUserString}`);
               }
             });
           });
