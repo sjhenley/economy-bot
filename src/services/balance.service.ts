@@ -79,7 +79,7 @@ class BalanceService {
                   }
                 });
 
-                (channel as TextChannel).send(`Congrats to the new LoungeLad(s)! ${topUserString}`);
+                // (channel as TextChannel).send(`Congrats to the new LoungeLad(s)! ${topUserString}`);
               }
             });
           });
