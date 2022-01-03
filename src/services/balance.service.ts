@@ -1,5 +1,5 @@
 import { BaseCommandInteraction, TextChannel } from 'discord.js';
-import { userMention } from '@discordjs/builders';
+import { memberNicknameMention } from '@discordjs/builders';
 
 import balanceRepository from '../repositories/balanceRepository';
 import User from '../models/User';
@@ -49,6 +49,9 @@ class BalanceService {
         const curTopUsers = role.members.map((u) => parseInt(u.user.id, 10));
 
         if (!topUsers.every((u) => curTopUsers.includes(u))) {
+          console.log(`Current Top: ${curTopUsers}`);
+          console.log(`New top: ${topUsers}`);
+
           // Get list of guild members
           memberMngr.list({ limit: 100 }).then((members) => {
           // Build a list of top members' usernames for later
@@ -71,7 +74,7 @@ class BalanceService {
               } else {
                 let topUserString = '';
                 topUsers.forEach((u, idx) => {
-                  topUserString += userMention(u.toString());
+                  topUserString += memberNicknameMention(u.toString());
                   if (topUserNames.length > 1 && idx !== topUserNames.length - 1) {
                     topUserString += ', ';
                   }
