@@ -50,7 +50,7 @@ class BalanceService {
         console.log(`Role: ${role.name}`);
 
         // Get list of guild members
-        memberMngr.list().then((members) => {
+        memberMngr.list({ limit: 100 }).then((members) => {
           // Give top users the top role, remove from others
           members.forEach((u) => {
             if (topUsers.includes(parseInt(u.id, 10))) {
