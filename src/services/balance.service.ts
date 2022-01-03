@@ -1,8 +1,8 @@
-import { BaseCommandInteraction } from 'discord.js';
+import { BaseCommandInteraction, TextChannel, Message } from 'discord.js';
 
 import balanceRepository from '../repositories/balanceRepository';
 import User from '../models/User';
-import { TOP_ROLE_ID } from '../const/idList';
+import { TOP_ROLE_ID, GENERAL_CHANNEL_ID } from '../const/idList';
 
 class BalanceService {
   constructor(
@@ -27,9 +27,6 @@ class BalanceService {
   }
 
   async calculateTopUser(interaction: BaseCommandInteraction): Promise<boolean> {
-    // id of the top role
-
-
     // get the User Manager
     const { guild } = interaction;
     if (!guild) return false;
@@ -52,12 +49,33 @@ class BalanceService {
 
         // Get list of guild members
         memberMngr.list({ limit: 100 }).then((members) => {
+          // Build a list of top members' usernames for later
+          const topUserNames: string[] = [];
+
           // Give top users the top role, remove from others
           members.forEach((u) => {
             if (topUsers.includes(parseInt(u.id, 10))) {
               u.roles.add(role);
+              topUserNames.push(u.user?.username);
             } else {
               u.roles.remove(role);
+            }
+          });
+
+          // Announce the new lounge lads
+          guild.channels.fetch(GENERAL_CHANNEL_ID).then((channel) => {
+            if (!channel) {
+              console.log('Channel not found');
+            } else {
+              let topUserString = '';
+              topUserNames.forEach((u, idx) => {
+                topUserString += u;
+                if (topUserNames.length > 1 && idx !== topUserNames.length - 1) {
+                  topUserString += ', ';
+                }
+              });
+
+              (channel as TextChannel).send(`@everyone Congrats to the new LoungeLad(s)! ${topUserString}`);
             }
           });
         });
