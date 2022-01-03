@@ -76,7 +76,7 @@ class BalanceService {
                   }
                 });
 
-                (channel as TextChannel).send(`@everyone Congrats to the new LoungeLad(s)! ${topUserString}`);
+                // (channel as TextChannel).send(`@everyone Congrats to the new LoungeLad(s)! ${topUserString}`);
               }
             });
           });
