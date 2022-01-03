@@ -40,15 +40,20 @@ class BalanceService {
       const topUser = users.reduce((max, user) => (user.balance > max.balance ? user : max));
       const topUsers = users.filter((u) => u.balance === topUser.balance).map((u) => u.discordID);
 
-      // Get list of guild members
-      memberMngr.list().then((members) => {
-        // Give top users the top role, remove from others
-        members.forEach((u) => {
-          if (topUsers.includes(parseInt(u.id, 10))) {
-            u.roles.add(topRole);
-          } else {
-            u.roles.remove(topRole);
-          }
+      // Get the top role
+      guild.roles.fetch(topRole).then((role) => {
+        if (!role) return;
+
+        // Get list of guild members
+        memberMngr.list().then((members) => {
+          // Give top users the top role, remove from others
+          members.forEach((u) => {
+            if (topUsers.includes(parseInt(u.id, 10))) {
+              u.roles.add(role);
+            } else {
+              u.roles.remove(role);
+            }
+          });
         });
       });
     });
