@@ -2,6 +2,7 @@ import { BaseCommandInteraction } from 'discord.js';
 
 import balanceRepository from '../repositories/balanceRepository';
 import User from '../models/User';
+import { TOP_ROLE_ID } from '../const/idList';
 
 class BalanceService {
   constructor(
@@ -27,7 +28,7 @@ class BalanceService {
 
   async calculateTopUser(interaction: BaseCommandInteraction): Promise<boolean> {
     // id of the top role
-    const topRole = '927047429675692122';
+
 
     // get the User Manager
     const { guild } = interaction;
@@ -41,7 +42,7 @@ class BalanceService {
       const topUsers = users.filter((u) => u.balance === topUser.balance).map((u) => u.discordID);
 
       // Get the top role
-      guild.roles.fetch(topRole).then((role) => {
+      guild.roles.fetch(TOP_ROLE_ID).then((role) => {
         if (!role) {
           console.log('Role not found');
           return;
