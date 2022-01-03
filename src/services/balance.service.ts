@@ -27,7 +27,7 @@ class BalanceService {
 
   async calculateTopUser(interaction: BaseCommandInteraction): Promise<boolean> {
     // id of the top role
-    const topRole = '@&927047429675692122';
+    const topRole = '927047429675692122';
 
     // get the User Manager
     const { guild } = interaction;
