@@ -1,4 +1,5 @@
-import { BaseCommandInteraction, TextChannel, Message } from 'discord.js';
+import { BaseCommandInteraction, TextChannel } from 'discord.js';
+import { userMention } from '@discordjs/builders';
 
 import balanceRepository from '../repositories/balanceRepository';
 import User from '../models/User';
@@ -69,8 +70,8 @@ class BalanceService {
                 console.log('Channel not found');
               } else {
                 let topUserString = '';
-                topUserNames.forEach((u, idx) => {
-                  topUserString += u;
+                topUsers.forEach((u, idx) => {
+                  topUserString += userMention(u.toString());
                   if (topUserNames.length > 1 && idx !== topUserNames.length - 1) {
                     topUserString += ', ';
                   }
