@@ -47,6 +47,23 @@ class BalanceRepository {
       throw new Error();
     }
   }
+
+  async getAllUsers(): Promise<User[]> {
+    const params: DocumentClient.ScanInput = {
+      TableName: 'lounge-economy',
+    };
+
+    console.debug('Calling SCAN action with the following paramaters: \n', params);
+
+    try {
+      const result = await this.client.scan(params).promise();
+      console.debug('Response from SCAN action: \n', result);
+      return result.Items ? result.Items as User[] : [];
+    } catch (error) {
+      console.error(error);
+      throw new Error();
+    }
+  }
 }
 
 export default new BalanceRepository();

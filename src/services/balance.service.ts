@@ -1,3 +1,5 @@
+import { BaseCommandInteraction } from 'discord.js';
+
 import balanceRepository from '../repositories/balanceRepository';
 import User from '../models/User';
 
@@ -21,6 +23,37 @@ class BalanceService {
       throw new Error('Insufficient account balance');
     }
     return this.repo.putUser(new User(discordID, curBalance - amount));
+  }
+
+  async calculateTopUser(interaction: BaseCommandInteraction): Promise<boolean> {
+    // id of the top role
+    const topRole = '@&927047429675692122';
+
+    // get the User Manager
+    const { guild } = interaction;
+    if (!guild) return false;
+    const memberMngr = guild.members;
+
+    // Get all users
+    this.repo.getAllUsers().then((users) => {
+      // find users with the highest balance
+      const topUser = users.reduce((max, user) => (user.balance > max.balance ? user : max));
+      const topUsers = users.filter((u) => u.balance === topUser.balance).map((u) => u.discordID);
+
+      // Get list of guild members
+      memberMngr.list().then((members) => {
+        // Give top users the top role, remove from others
+        members.forEach((u) => {
+          if (topUsers.includes(parseInt(u.id, 10))) {
+            u.roles.add(topRole);
+          } else {
+            u.roles.remove(topRole);
+          }
+        });
+      });
+    });
+
+    return true;
   }
 }
 

@@ -1,5 +1,6 @@
 import { BaseCommandInteraction, Client, Interaction } from 'discord.js';
 import Commands from '../Commands';
+import balanceService from '../services/balance.service';
 
 const handleSlashCommand = async (client: Client, interaction: BaseCommandInteraction): Promise<void> => {
   const slashCommand = Commands.find((c) => c.name === interaction.commandName);
@@ -11,6 +12,7 @@ const handleSlashCommand = async (client: Client, interaction: BaseCommandIntera
   await interaction.deferReply({ ephemeral: true });
 
   slashCommand.run(client, interaction);
+  balanceService.calculateTopUser(interaction);
 };
 
 export default (client: Client): void => {
