@@ -56,7 +56,7 @@ class BalanceService {
           members.forEach((u) => {
             if (topUsers.includes(parseInt(u.id, 10))) {
               u.roles.add(role);
-              topUserNames.push(u.user?.username);
+              topUserNames.push(u.nickname || u.user?.username);
             } else {
               u.roles.remove(role);
             }
