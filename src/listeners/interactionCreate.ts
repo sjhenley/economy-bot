@@ -12,13 +12,12 @@ const handleSlashCommand = async (client: Client, interaction: BaseCommandIntera
   await interaction.deferReply({ ephemeral: true });
 
   slashCommand.run(client, interaction);
-  balanceService.calculateTopUser(interaction);
 };
 
 export default (client: Client): void => {
   client.on('interactionCreate', async (interaction: Interaction) => {
     if (interaction.isCommand() || interaction.isContextMenu()) {
-      await handleSlashCommand(client, interaction);
+      await handleSlashCommand(client, interaction).then(() => balanceService.calculateTopUser(interaction));
     }
   });
 };
