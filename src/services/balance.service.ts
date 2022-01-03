@@ -42,7 +42,12 @@ class BalanceService {
 
       // Get the top role
       guild.roles.fetch(topRole).then((role) => {
-        if (!role) return;
+        if (!role) {
+          console.log('Role not found');
+          return;
+        }
+
+        console.log(`Role: ${role.name}`);
 
         // Get list of guild members
         memberMngr.list().then((members) => {
