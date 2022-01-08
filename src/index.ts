@@ -14,5 +14,3 @@ ready(client);
 interactionCreate(client);
 
 client.login(process.env.BOT_TOKEN);
-
-// console.log(client);
