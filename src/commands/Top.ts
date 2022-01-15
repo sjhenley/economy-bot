@@ -13,7 +13,7 @@ const Top: Command = {
       let msg: string = 'Top Users:\n';
       for (let i = 0; i < 5; i += 1) {
         // eslint-disable-next-line no-await-in-loop
-        const username = await client.users.fetch(users[i].discordID.toString());
+        const username = await interaction.guild?.members.fetch(users[i].discordID.toString());
         msg += `${i + 1}. ${username} (${users[i].balance})\n`;
       }
       await interaction.followUp({
