@@ -1,4 +1,4 @@
-import { BaseCommandInteraction, TextChannel } from 'discord.js';
+import { BaseCommandInteraction } from 'discord.js';
 import { memberNicknameMention } from '@discordjs/builders';
 
 import balanceRepository from '../repositories/balanceRepository';
@@ -27,6 +27,10 @@ class BalanceService {
     return this.repo.putUser(new User(discordID, curBalance - amount));
   }
 
+  async getAll(): Promise<User[]> {
+    return this.repo.getAllUsers();
+  }
+
   async calculateTopUser(interaction: BaseCommandInteraction): Promise<boolean> {
     // get the User Manager
     const { guild } = interaction;
@@ -34,7 +38,7 @@ class BalanceService {
     const memberMngr = guild.members;
 
     // Get all users
-    this.repo.getAllUsers().then((users) => {
+    this.getAll().then((users) => {
       // find users with the highest balance
       const topUser = users.reduce((max, user) => (user.balance > max.balance ? user : max));
       const topUsers = users.filter((u) => u.balance === topUser.balance).map((u) => u.discordID);
