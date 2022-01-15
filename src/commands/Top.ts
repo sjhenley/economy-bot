@@ -1,6 +1,6 @@
 import { BaseCommandInteraction, Client } from 'discord.js';
 
-import balanceService from 'src/services/balance.service';
+import balanceService from '../services/balance.service';
 import { Command } from '../Command';
 
 const Top: Command = {
