@@ -30,6 +30,8 @@ const Give: Command = {
         await balanceService.removeBalanceFromUser(parseInt(sourceUser.id, 10), amount as number);
         await balanceService.addBalanceToUser(parseInt(targetUser.id, 10), amount as number);
 
+        await targetUser.send(`${sourceUser.username} gave you ${amount} loungebucks!`);
+
         await interaction.followUp({
           ephemeral: true,
           content: `Gave ${targetUser.username} ${amount} loungebucks`,
