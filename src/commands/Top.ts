@@ -12,7 +12,8 @@ const Top: Command = {
       users.sort((a, b) => b.balance - a.balance);
       let msg: string = 'Top Users:\n';
       for (let i = 0; i < 5; i += 1) {
-        const username = client.users.fetch(users[i].discordID.toString());
+        // eslint-disable-next-line no-await-in-loop
+        const username = await client.users.fetch(users[i].discordID.toString());
         msg += `${i + 1}. ${username} (${users[i].balance})\n`;
       }
       await interaction.followUp({
