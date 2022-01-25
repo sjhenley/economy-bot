@@ -9,7 +9,9 @@ export default (client: Client): void => {
       return;
     }
 
-    client.user.setActivity('Supressing workers rights');
+    client.user.setActivity('Supressing workers rights', {
+      type: 4,
+    });
 
     await client.application.commands.set(Commands);
 
