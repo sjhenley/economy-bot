@@ -9,6 +9,8 @@ export default (client: Client): void => {
       return;
     }
 
+    client.user.setActivity('Supressing workers rights');
+
     await client.application.commands.set(Commands);
 
     console.log(`${client.user.username} is online`);
