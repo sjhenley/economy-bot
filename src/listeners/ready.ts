@@ -9,8 +9,8 @@ export default (client: Client): void => {
       return;
     }
 
-    client.user.setActivity('Supressing workers rights', {
-      type: 4,
+    client.user.setActivity('wagecucks', {
+      type: 'WATCHING',
     });
 
     await client.application.commands.set(Commands);
