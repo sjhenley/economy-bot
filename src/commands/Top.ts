@@ -12,9 +12,12 @@ const Top: Command = {
       users.sort((a, b) => b.balance - a.balance);
       let msg: string = 'Top Users:\n';
       for (let i = 0; i < 5; i += 1) {
-        // eslint-disable-next-line no-await-in-loop
-        const username = await interaction.guild?.members.fetch(users[i].discordID.toString());
-        msg += `${i + 1}. ${username} (${users[i].balance})\n`;
+        const user = client.users.cache.get(users[i].discordID.toString());
+        if (user) {
+          msg += `${i + 1}. ${user.username} (${users[i].balance})\n`;
+        } else {
+          console.warn(`could not fine user with id [${users[i].discordID.toString()}] in cache`);
+        }
       }
       await interaction.followUp({
         ephemeral: true,
