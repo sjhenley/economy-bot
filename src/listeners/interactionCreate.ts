@@ -17,7 +17,7 @@ const handleSlashCommand = async (client: Client, interaction: BaseCommandIntera
 export default (client: Client): void => {
   client.on('interactionCreate', async (interaction: Interaction) => {
     if (interaction.isCommand() || interaction.isContextMenu()) {
-      await handleSlashCommand(client, interaction).then(() => balanceService.calculateTopUser(interaction));
+      await handleSlashCommand(client, interaction).then(/* () => balanceService.calculateTopUser(interaction) */);
     }
   });
 };
